@@ -23,7 +23,7 @@ def activeHorn(token):
         "login_token": token
     })
     if 'error' not in res:
-        logger.debug("Camp", "Active horn initiated")
+        logger.debug("Camp", "Sounded horn.")
         return res.json()
     logger.error("Camp", "Active horn failed.")
     return None

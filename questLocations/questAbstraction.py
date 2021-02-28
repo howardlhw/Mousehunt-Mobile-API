@@ -1,5 +1,5 @@
 from abc import ABC
-from util.api import setTrap, environmentApiCall
+from util.api import setTrap, environmentApiCall, passiveHorn
 import requests
 from util.util import logger
 
@@ -8,6 +8,10 @@ class QuestAbstractions(ABC):
         self.login_token = login_token
         self.userdata = userdata
         self.environment = environment
+
+    def refreshUserData(self):
+        self.userdata = passiveHorn(self.login_token)
+        return self.userdata
 
     def getUserData(self):
         return self.userdata

@@ -101,6 +101,7 @@ class FloatingIslands(QuestAbstractions):
 
     # Computations
     def getSkyMapGrid(self):
+        self.refreshUserData(self)
         squareArray = self.userdata['user']['location_stats']['board_grid_data']
         mainArray = []
         for array in squareArray:
@@ -274,7 +275,7 @@ class FloatingIslands(QuestAbstractions):
     def execute(self):
         # print("------------------DEBUG------------------")
         # # self.sortSkyMapGrid()
-        # print(self.armPirateSetup())
+        # print(self.refreshUserData())
         # print("------------------END OF DEBUG------------------")
 
         # Commence loop to scramble door until the preferred door is available
@@ -302,7 +303,6 @@ class FloatingIslands(QuestAbstractions):
                         logger.info(self.environment, f'No suitable island found, triggering cyclone.')
                         self.useCyclone()  # Troubleshoot first
                         time.sleep(15)
-                logger.info(self.environment, f'Launch code is {power}.')
 
                 # If launching to pirate, equip pirate setup
                 if self.getCorsairCheeseCount() >= pirate_threshold:
