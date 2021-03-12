@@ -81,7 +81,7 @@ class BristleWoodsRift(QuestAbstractions):
             'action': 'enter_portal',
             'chamber_type': portalName
         })
-        logger.info(self.environment, f'Entering {portalName}')
+        # logger.info(self.environment, f'Entering {portalName}')
         return res
 
     # Chamber condition setters
@@ -134,22 +134,22 @@ class BristleWoodsRift(QuestAbstractions):
 
         # Condition 1s - Always enter
         if 'guard_chamber' in portals:
-            logger.info(self.environment, "Entering Guard Barracks")
+            # logger.info(self.environment, "Entering Guard Barracks")
             return 'guard_chamber'
 
         # Actively remove the status effect, if inflicted.
         if self.isStatusEffectsActive('un') and 'silence_chamber' not in portals:
-            logger.info(self.environment, "Scrambling for guard barracks")
+            logger.info(self.environment, "Scrambling for security chamber")
             return None
 
         # Condition 1s - Always enter
         if 'silence_chamber' in portals:
-            logger.info(self.environment, "Entering Silence Chamber")
+            # logger.info(self.environment, "Entering Silence Chamber")
             return 'silence_chamber'
 
         # Condition 1s - Always enter
         if 'security_chamber' in portals:
-            logger.info(self.environment, "Entering Security Chamber")
+            # logger.info(self.environment, "Entering Security Chamber")
             return 'security_chamber'
 
         # Condition - Enter Acolyte chamber if all conditions are met
@@ -162,12 +162,12 @@ class BristleWoodsRift(QuestAbstractions):
 
         # Condition - Money is money
         if 'lucky_chamber' in portals:
-            logger.info(self.environment, "Entering Lucky Chamber.")
+            # logger.info(self.environment, "Entering Lucky Chamber.")
             return 'lucky_chamber'
 
         # Condition - Money is money
         if 'treasury_chamber' in portals:
-            logger.info(self.environment, "Entering Treasury Chamber.")
+            # logger.info(self.environment, "Entering Treasury Chamber.")
             return 'treasury_chamber'
 
         # Condition - Don't get into timewarp if not enough runic cheese
@@ -223,13 +223,15 @@ class BristleWoodsRift(QuestAbstractions):
             self.changeTrap(2322)
             logger.info(self.environment, "Obelisk fully charged, disable Quantum Quarts.")
 
-        # End loop if portals are closed
-        if not self.isPortalsOpened():
-            return
 
         # Refil brie string cheese if running low
         if self.getItemsCount('brie_string_cheese') < 200:
             purchase(self.login_token, 1424, 30)
+            logger.info(self.environment, "Purchased 30 brie string cheese.")
+
+        # End loop if portals are closed
+        if not self.isPortalsOpened():
+            return
 
         # # Select the portal and enter the chamber, then change trap setup
         determinedPortal = self.determineChamberToEnter(mode)

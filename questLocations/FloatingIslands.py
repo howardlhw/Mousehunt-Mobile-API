@@ -84,12 +84,12 @@ class FloatingIslands(QuestAbstractions):
         return res
 
     def launch(self, powertype):
+        logger.info(self.environment, f'Launching to {powertype} island')
         res = self.action({
             'action': 'launch',
             'power_type': powertype,
             'use_saved_trap_setup': 0
         })
-        logger.info(self.environment, f'Launching to {powertype} island')
         return res
 
     def armSavedSetup(self):
@@ -101,7 +101,7 @@ class FloatingIslands(QuestAbstractions):
 
     # Computations
     def getSkyMapGrid(self):
-        self.refreshUserData(self)
+        self.refreshUserData()
         squareArray = self.userdata['user']['location_stats']['board_grid_data']
         mainArray = []
         for array in squareArray:

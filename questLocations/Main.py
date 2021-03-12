@@ -2,8 +2,6 @@ from questLocations.FloatingIslands import FloatingIslands
 from questLocations.BristleWoodsRift import BristleWoodsRift
 from util.api import passiveHorn, activeHorn
 from util.util import logger
-from config import MousehuntConfig
-
 
 class MouseHunt():
     """ This is the main mousehunt class that houses the quest locations """
@@ -26,13 +24,17 @@ class MouseHunt():
         }
 
         if locations.get(self.getEnvIds()) == None:
-            logger.error("Main", "Location not available for automating.")
+            logger.debug("Main", "Location not available for automating.")
             return None
         return locations.get(self.getEnvIds())
 
 
     def automateHunt(self, *args):
         """ Main automation code """
+        if self.checkActiveTurnAvailability():
+            activeHorn(self.config['login_token'])
+
+
         questObj = self.getLocationObject(self.config['login_token'], self.userdata)
 
         # Exit condition
@@ -40,7 +42,4 @@ class MouseHunt():
             return
 
         # Sound the horn if it's available.
-        if self.checkActiveTurnAvailability():
-            activeHorn(self.config['login_token'])
-
         questObj.execute()

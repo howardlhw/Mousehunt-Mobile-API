@@ -19,7 +19,7 @@ loadouts = {
         'bait': 'brie_string_cheese',
         'trinket': 'rift_anti_skele_trinket' # rift_trinkey
     },
-    'hidden_treasury': {
+    'treasure_chamber': {
         'quantumQuarts': True,
         'bait': 'brie_string_cheese',
         'trinket': 'rift_anti_skele_trinket' # rift_trinkey
@@ -37,12 +37,12 @@ loadouts = {
     'magic_chamber': {
         'quantumQuarts': False,
         'bait': 'ancient_string_cheese',
-        'trinket': 'rift_snowball_trinket' # rift_trinkey
+        'trinket': 'rift_anti_skele_trinket' # rift_trinkey
     },
     'potion_chamber': {
         'quantumQuarts': False,
         'bait': 'brie_string_cheese',
-        'trinket': 'rift_snowball_trinket' # rift_trinkey
+        'trinket': 'rift_vacuum_trinket' # rift_trinkey
     },
     'gearWorks': {
         'quantumQuarts': False,
