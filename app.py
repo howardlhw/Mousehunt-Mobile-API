@@ -1,15 +1,17 @@
+""" This is the main python execution loop """
+
 import time
+import traceback
+import os
+from datetime import datetime
+from dotenv import load_dotenv
 from questLocations.Main import MouseHunt
 from util.util import logger
-import traceback
-import time
-import os
-from dotenv import load_dotenv
-from datetime import datetime
 
 load_dotenv('.env')
 
-def executeScript():
+def execute_script():
+    """ This is the main execution script """
     load_dotenv()
 
     while True:
@@ -23,20 +25,20 @@ def executeScript():
             user1 = {
                 "login_token": os.getenv('USER1')
             }
-            mh = MouseHunt(user1)
-            mh.automateHunt()
+            mh_main = MouseHunt(user1)
+            mh_main.automateHunt()
 
             user2 = {
                 "login_token": os.getenv('USER2')
             }
-            mh2 = MouseHunt(user2)
-            mh2.automateHunt()
+            mh_sashimi = MouseHunt(user2)
+            mh_sashimi.automateHunt()
             time.sleep(120)
 
-        except Exception as e:
-            print(str(e))
+        except ValueError as value_error:
+            print(str(value_error))
             traceback.print_exc()
 
 if __name__ == "__main__":
     logger.info("Main", "Launching Application")
-    executeScript()
+    execute_script()
