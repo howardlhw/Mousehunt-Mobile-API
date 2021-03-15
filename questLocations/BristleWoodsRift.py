@@ -107,10 +107,10 @@ class BristleWoodsRift(QuestAbstractions):
         portals = list(set(portals))
         logger.info(self.environment, portals)
 
-        aa_sand_threshold = 40  # For entering acolyate chamber
+        aa_sand_threshold = 38  # For entering acolyate chamber
         runic_threshold = aa_sand_threshold  # For entering acolyate chamber
-        runic_upper_threshold = 100 # For stop entering runic chambers
-        timewramp_runicRqd_thresdhold = 30 # Required amount of runic cheese before enteiring timewarp
+        runic_upper_threshold = 400 # For stop entering runic chambers
+        timewramp_runicRqd_thresdhold = 40 # Required amount of runic cheese before enteiring timewarp
 
         # Banished chambers
         if 'ingress_chamber' in portals:

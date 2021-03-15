@@ -15,7 +15,7 @@ loadouts = {
         'trinket': 'rift_vacuum_trinket'
     },
     'lucky_chamber': {
-        'quantumQuarts': False,
+        'quantumQuarts': True,
         'bait': 'brie_string_cheese',
         'trinket': 'rift_anti_skele_trinket' # rift_trinkey
     },
@@ -40,17 +40,17 @@ loadouts = {
         'trinket': 'rift_anti_skele_trinket' # rift_trinkey
     },
     'potion_chamber': {
-        'quantumQuarts': False,
+        'quantumQuarts': True,
         'bait': 'brie_string_cheese',
         'trinket': 'rift_vacuum_trinket' # rift_trinkey
     },
     'gearWorks': {
-        'quantumQuarts': False,
+        'quantumQuarts': True,
         'bait': 'brie_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     },
     'basic_chamber': {
-        'quantumQuarts': False,
+        'quantumQuarts': True,
         'bait': 'brie_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     }
