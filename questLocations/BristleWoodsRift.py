@@ -214,9 +214,12 @@ class BristleWoodsRift(QuestAbstractions):
 
 
     # Main Automation
-    def execute(self, mode=None):
+    def execute(self):
         sandCount = ''
-        mode = 'speedy' # Update mode here.
+        mode = None
+
+        if len(self.args) != 0:
+            mode = self.args[0]
 
         # Brew the potions, if any
         if self.getItemsCount('ancient_string_cheese_potion') > randint(6, 10):

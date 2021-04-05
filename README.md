@@ -164,10 +164,15 @@ The chambers are selected automatically based on the user's item count.
 
 There are two modes of operation - normal and speedy.
 
-- Normal - in this mode, the script prioritizes chamber selection to reach AA, as long as minimal required cheese / sand is met.
-- Speedy - in this mode, the script will assume that the user has sufficient cheese and just head for timewarp chamber, guard barracks, and acolyte chamber. Typically the cycle can be completed in less than a day.
+- normal - in this mode, the script prioritizes chamber selection to reach AA, as long as minimal required cheese / sand is met.
+- speedy - in this mode, the script will assume that the user has sufficient cheese and just head for timewarp chamber, guard barracks, and acolyte chamber. Typically the cycle can be completed in less than a day.
 
-Update the operation mode in the execute section of the file. This is a work in progress.
+You can update the mode of operation in the following section. If nothing is passed / the wrong text is passed, the script will assume it to be running in normal mode.
+
+```
+mh_acc2.automateHunt('speedy')
+
+```
 
 **Loadout**
 

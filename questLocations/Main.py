@@ -16,11 +16,12 @@ class MouseHunt():
         """ Return the location of the user """
         return self.userdata['user']['environment_id']
 
-    def getLocationObject(self, token, userdata):
+    def getLocationObject(self, token, userdata, *args):
         """ resolve environment id and location objects """
+
         locations = {
-            63: FloatingIslands(token, userdata, "floating_islands"),
-            55: BristleWoodsRift(token, userdata, "rift_bristle_woods")
+            63: FloatingIslands(token, userdata, "floating_islands", *args),
+            55: BristleWoodsRift(token, userdata, "rift_bristle_woods", *args)
         }
 
         if locations.get(self.getEnvIds()) == None:
@@ -34,8 +35,7 @@ class MouseHunt():
         if self.checkActiveTurnAvailability():
             activeHorn(self.config['login_token'])
 
-
-        questObj = self.getLocationObject(self.config['login_token'], self.userdata)
+        questObj = self.getLocationObject(self.config['login_token'], self.userdata, *args)
 
         # Exit condition
         if questObj == None:

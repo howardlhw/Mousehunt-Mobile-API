@@ -4,10 +4,11 @@ import requests
 from util.util import logger
 
 class QuestAbstractions(ABC):
-    def __init__(self, login_token, userdata, environment):
+    def __init__(self, login_token, userdata, environment, *args):
         self.login_token = login_token
         self.userdata = userdata
         self.environment = environment
+        self.args = args
 
     def refreshUserData(self):
         self.userdata = passiveHorn(self.login_token)

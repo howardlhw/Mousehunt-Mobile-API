@@ -35,7 +35,7 @@ def execute_script():
                 "login_token": os.getenv('USER2')
             }
             mh_acc2 = MouseHunt(user2)
-            mh_acc2.automateHunt()
+            mh_acc2.automateHunt('speedy')
 
         except Exception as general_error:
             print(str(general_error))
