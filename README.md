@@ -98,7 +98,7 @@ if __name__ == "__main__":
     executeScript()
 ```
 
-## Step 5 - Off-hutn hours
+## Step 5 - Off-hunt hours
 
 To simulate for human sleeping behaviour, an off-hunt hour is created. Update the following code to disable hunting during this period of time.
 
