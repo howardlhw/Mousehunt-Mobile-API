@@ -6,7 +6,7 @@ loadouts = {
     },
     'guard_chamber': {
         'quantumQuarts': True,
-        'bait': 'runic_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     },
     'icy_chamber': {

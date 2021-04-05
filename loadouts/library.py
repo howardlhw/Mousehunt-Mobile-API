@@ -10,7 +10,8 @@ library = {
     'toxic_super_brie_cheese': 1967,
     'rift_ultimate_power_trinket': 1651,
     'pirate_sleigh_weapon': 3152,
-    'sky_pirate_cheese': 3090
+    'sky_pirate_cheese': 3090,
+    'magical_string_cheese': 1426
 
 
 }

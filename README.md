@@ -73,6 +73,14 @@ user = {
 }
 ```
 
+We use environment variable to store this value, simply create a ".env" file in the same folder as app.py and enter the following information as environment variable. 
+
+```
+USER1=[USER TOKEN HERE]
+```
+
+Note that you can enter your token directly without the use of environment token.
+
 ## Step 4 - Executing script
 
 Update the following section with the updated codes. The instance will run automatically when automateHunt is called. The parameters of automate hunt to pass into can be found in the respective sections.
@@ -89,6 +97,18 @@ def executeScript():
 if __name__ == "__main__":
     executeScript()
 ```
+
+## Step 5 - Off-hutn hours
+
+To simulate for human sleeping behaviour, an off-hunt hour is created. Update the following code to disable hunting during this period of time.
+
+```
+stop_hour = 4
+start_hour = 10
+```
+
+To disable this feature, simply put the start / stop hour as identical. Note that stop_hour must always be smaller than start_hour.
+
 
 # Quest Files
 
@@ -140,6 +160,18 @@ Charm Options (trinket)
 
 The chambers are selected automatically based on the user's item count.
 
+**Modes of Operation**
+
+There are two modes of operation - normal and speedy.
+
+- Normal - in this mode, the script prioritizes chamber selection to reach AA, as long as minimal required cheese / sand is met.
+- Speedy - in this mode, the script will assume that the user has sufficient cheese and just head for timewarp chamber, guard barracks, and acolyte chamber. Typically the cycle can be completed in less than a day.
+
+Update the operation mode in the execute section of the file. This is a work in progress.
+
+**Loadout**
+
+You can change your loadout by changing the dictionary file in loadouts\bristileWoodsRiftLoadout.py. Cross reference the names with the loadout library. Message me if the loadout library cannot be found. 
 
 ## Floating Islands
 

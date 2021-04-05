@@ -29,7 +29,10 @@ class FloatingIslands(QuestAbstractions):
         return self.userdata['user']['location_stats']['hunting_site_atts']['is_fuel_enabled'] == True
 
     def getCorsairCheeseCount(self):
-        return self.userdata['user']['inventory'][281]['quantity']
+        for item in self.userdata['user']['inventory']:
+            if item['item_id'] == 3090:
+                return item['quantity']
+        return 0
 
     def isAtHAI(self):
         return self.userdata['user']['location_stats']['hunting_site_atts']['sky_wardens_caught'] == 4
@@ -56,7 +59,7 @@ class FloatingIslands(QuestAbstractions):
                 self.isOnHighAltitudeIsland()
 
     def getTrapSetup(self, type):
-        return self.userdata['user']['location_stats']['saved_trap_setup']['items'][type]['type']
+        return self.userdata['user']['trap'][type]
 
     def enableBottledWind(self):
         if self.getBottledWindStatus() == False:
@@ -214,20 +217,19 @@ class FloatingIslands(QuestAbstractions):
             logger.info(self.environment, f'{item["power"]} : {weaponMap[item["power"]]}')
             return item['power']
 
-
     def armWardenSetup(self):
         status = False
-        if self.getTrapSetup('weapon') != 'geyser_physical_weapon':
+        if self.getTrapSetup('weapon_id') != 2844:
             self.changeTrap(2844)
             logger.info(self.environment, 'Arming Smoldering Stone sentinel')
             status = True
 
-        if self.getTrapSetup('bait') != 'toxic_super_brie_cheese':
+        if self.getTrapSetup('bait_id') != 1967:
             self.changeTrap(1967)
             logger.info(self.environment, 'Arming empowered SB+')
             status = True
 
-        if self.getTrapSetup('trinket') != 'rift_ultimate_power_trinket':
+        if self.getTrapSetup('trinket_id') != 1651:
             self.changeTrap(1651)
             logger.info(self.environment, 'Arming Rift ultimate power charm')
             status = True
@@ -238,12 +240,12 @@ class FloatingIslands(QuestAbstractions):
 
     def armParagonSetup(self):
         status = False
-        if self.getTrapSetup('bait') != 'toxic_super_brie_cheese':
+        if self.getTrapSetup('bait_id') != 1967:
             self.changeTrap(1967)
             logger.info(self.environment, 'Arming empowered SB+')
             status = True
 
-        if self.getTrapSetup('trinket') != 'rift_ultimate_power_trinket':
+        if self.getTrapSetup('trinket_id') != 1651:
             self.changeTrap(1651)
             logger.info(self.environment, 'Arming Rift ultimate power charm')
             status = True
@@ -254,17 +256,17 @@ class FloatingIslands(QuestAbstractions):
 
     def armPirateSetup(self):
         status = False
-        if self.getTrapSetup('weapon') != 'pirate_sleigh_weapon':
+        if self.getTrapSetup('weapon_id') != 3152:
             self.changeTrap(3152)
             logger.info(self.environment, 'Arming Pirate Trap')  
             status = True
 
-        if self.getTrapSetup('bait') != 'sky_pirate_cheese':
+        if self.getTrapSetup('bait_id') != 3090:
             self.changeTrap(3090)
             logger.info(self.environment, 'Arming Pirate Cheese')
             status = True
 
-        if self.getTrapSetup('trinket') != 'rift_extreme_power_trinket':
+        if self.getTrapSetup('trinket_id') != 2907:
             self.changeTrap(2907)
             logger.info(self.environment, 'Arming Rift extreme power charm')
             status = True
@@ -273,15 +275,9 @@ class FloatingIslands(QuestAbstractions):
             logger.info(self.environment, 'Armed pirate setup, ready to battle.')
 
     def execute(self):
-        # print("------------------DEBUG------------------")
-        # # self.sortSkyMapGrid()
-        # print(self.refreshUserData())
-        # print("------------------END OF DEBUG------------------")
-
         # Commence loop to scramble door until the preferred door is available
         while (True):
             # Determining the threshold to start hunting pirates.
-
             pirate_threshold = 20
             # Case 1 - at launch pad ready to go
             if self.isAtLaunchPad():
@@ -291,9 +287,9 @@ class FloatingIslands(QuestAbstractions):
                     # if self.isAtHAI():
                     #     power = self.determineIslandTarget('high_pirate')
                     if self.isAtHAI():
+                        return # don't hunt first
                         power = self.determineIslandTarget('high_loot')
                     elif self.getCorsairCheeseCount() >= pirate_threshold:
-                        print(self.getCorsairCheeseCount())
                         power = self.determineIslandTarget('pirate')
                     elif self.getCorsairCheeseCount() < pirate_threshold:
                         power = self.determineIslandTarget()
@@ -316,7 +312,7 @@ class FloatingIslands(QuestAbstractions):
             # Case 2, on the island
             else:
                 # Case 2-1, leave the LAI if fully explored
-                if self.isIslandFullyExplored() and not self.isOnHighAltitudeIsland():
+                if self.isIslandFullyExplored() and not self.isOnHighAltitudeIsland() and not self.isBattlingWarden():
                     logger.info(self.environment, f'Low Altitude Island is fully explored.')
                     self.leaveTheIsland()
                     return
@@ -337,11 +333,13 @@ class FloatingIslands(QuestAbstractions):
                         logger.info(self.environment, f'Low on corsair cheese, arming saved setup.')
                         self.armSavedSetup()
 
-                # Ensure the bottled wind is on
-                if self.isAtLastPanel():
-                    self.disableBottledWind()
-                else:
-                    self.enableBottledWind()
+                # # Ensure the bottled wind is on
+                # if self.isAtLastPanel():
+                #     self.disableBottledWind()
+                # else:
+                #     self.enableBottledWind()
+
+                self.enableBottledWind()   
 
             return
 

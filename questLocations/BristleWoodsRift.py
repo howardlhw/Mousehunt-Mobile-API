@@ -107,7 +107,7 @@ class BristleWoodsRift(QuestAbstractions):
         portals = list(set(portals))
         logger.info(self.environment, portals)
 
-        aa_sand_threshold = 38  # For entering acolyate chamber
+        aa_sand_threshold = 40  # For entering acolyate chamber
         runic_threshold = aa_sand_threshold  # For entering acolyate chamber
         runic_upper_threshold = 400 # For stop entering runic chambers
         timewramp_runicRqd_thresdhold = 40 # Required amount of runic cheese before enteiring timewarp
@@ -131,6 +131,12 @@ class BristleWoodsRift(QuestAbstractions):
 
             if 'potion_chamber' in portals and self.getItemsCount('rift_scramble_portals_stat_item')>3:
                 portals.remove('potion_chamber')
+
+            if 'lucky_chamber' in portals and self.getItemsCount('rift_scramble_portals_stat_item')>3:
+                portals.remove('lucky_chamber')
+
+            if 'treasury_chamber' in portals and self.getItemsCount('rift_scramble_portals_stat_item')>3:
+                portals.remove('treasury_chamber')
 
         # Condition 1s - Always enter
         if 'guard_chamber' in portals:
@@ -210,6 +216,7 @@ class BristleWoodsRift(QuestAbstractions):
     # Main Automation
     def execute(self, mode=None):
         sandCount = ''
+        mode = 'speedy' # Update mode here.
 
         # Brew the potions, if any
         if self.getItemsCount('ancient_string_cheese_potion') > randint(6, 10):

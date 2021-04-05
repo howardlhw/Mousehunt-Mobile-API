@@ -13,14 +13,17 @@ load_dotenv('.env')
 def execute_script():
     """ This is the main execution script """
     load_dotenv()
+    stop_hour = 10
+    start_hour = 10
 
     while True:
         try:
             current_hour = datetime.now().hour
-            if 1<=current_hour<=6:
-                logger.info("Snooze", "Sleeping Time")
-                time.sleep(3600)
-                continue
+            if stop_hour != start_hour:
+                if stop_hour<=current_hour<=start_hour:
+                    logger.info("Snooze", "Sleeping Time")
+                    time.sleep(3600)
+                    continue
 
             user1 = {
                 "login_token": os.getenv('USER1')
@@ -31,13 +34,14 @@ def execute_script():
             user2 = {
                 "login_token": os.getenv('USER2')
             }
-            mh_sashimi = MouseHunt(user2)
-            mh_sashimi.automateHunt()
-            time.sleep(120)
+            mh_acc2 = MouseHunt(user2)
+            mh_acc2.automateHunt()
 
-        except ValueError as value_error:
-            print(str(value_error))
+        except Exception as general_error:
+            print(str(general_error))
             traceback.print_exc()
+            
+        time.sleep(120)
 
 if __name__ == "__main__":
     logger.info("Main", "Launching Application")
