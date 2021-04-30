@@ -256,9 +256,9 @@ class FloatingIslands(QuestAbstractions):
 
     def armPirateSetup(self):
         status = False
-        if self.getTrapSetup('weapon_id') != 3152:
-            self.changeTrap(3152)
-            logger.info(self.environment, 'Arming Pirate Trap')  
+        if self.getTrapSetup('weapon_id') != 1515:
+            self.changeTrap(1515)
+            logger.info(self.environment, 'Arming School of Shark')  
             status = True
 
         if self.getTrapSetup('bait_id') != 3090:
@@ -266,9 +266,9 @@ class FloatingIslands(QuestAbstractions):
             logger.info(self.environment, 'Arming Pirate Cheese')
             status = True
 
-        if self.getTrapSetup('trinket_id') != 2907:
-            self.changeTrap(2907)
-            logger.info(self.environment, 'Arming Rift extreme power charm')
+        if self.getTrapSetup('trinket_id') != 2121:
+            self.changeTrap(2121)
+            logger.info(self.environment, 'Arming Rift Ultimate Lucky Power charm')
             status = True
 
         if status:
@@ -287,7 +287,8 @@ class FloatingIslands(QuestAbstractions):
                     # if self.isAtHAI():
                     #     power = self.determineIslandTarget('high_pirate')
                     if self.isAtHAI():
-                        return # don't hunt first
+                        # return # don't select island first
+                        # power = self.determineIslandTarget() # Normal high speed hunting
                         power = self.determineIslandTarget('high_loot')
                     elif self.getCorsairCheeseCount() >= pirate_threshold:
                         power = self.determineIslandTarget('pirate')
@@ -333,13 +334,13 @@ class FloatingIslands(QuestAbstractions):
                         logger.info(self.environment, f'Low on corsair cheese, arming saved setup.')
                         self.armSavedSetup()
 
-                # # Ensure the bottled wind is on
-                # if self.isAtLastPanel():
-                #     self.disableBottledWind()
-                # else:
-                #     self.enableBottledWind()
+                # Ensure the bottled wind is on
+                if self.isIslandFullyExplored():
+                    self.disableBottledWind()
+                else:
+                    self.enableBottledWind()
 
-                self.enableBottledWind()   
+                # self.enableBottledWind()   
 
             return
 

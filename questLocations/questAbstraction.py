@@ -29,3 +29,16 @@ class QuestAbstractions(ABC):
             ids = [str(id) for id in ids]
         res = setTrap(self.login_token, ids)
         return res
+
+    def debug(self):
+        print(self.userdata['user']['location_stats'])
+
+    def printCurrentTrapID(self):
+        print(f"Bait: {self.userdata['user']['trap']['bait_id']}")
+        print(f"Weapon: {self.userdata['user']['trap']['weapon_id']}")
+        print(f"Base: {self.userdata['user']['trap']['base_id']}")
+        print(f"Trinket: {self.userdata['user']['trap']['trinket_id']}")
+
+    def getCurrentID(self, item):
+        # Item can be trinket_id ,bait_id, base_id
+        return self.userdata['user']['trap'][item]

@@ -23,7 +23,7 @@ class BristleWoodsRift(QuestAbstractions):
         return int(self.userdata['user']['location_stats']['items'][itemName]['quantity'])
 
     def isStatusEffectsActive(self, effect):
-        return self.userdata['user']['location_stats']['status_effects'][effect] == 'active'
+        return self.userdata['user']['location_stats']['status_effects'].get(effect)[:6] == 'active'
 
     def isItemActive(self, itemName):
         status = ['selected']
@@ -230,7 +230,7 @@ class BristleWoodsRift(QuestAbstractions):
         # Toggle for the case at acolyte chamber
         if self.getObeliskCharge() == 100 and self.isItemActive('rift_quantum_quartz_stat_item'):
             self.toggleQuantumQuarts()
-            self.changeTrap(2322)
+            self.changeTrap(2524) # User festive ultimate lucky power charm
             logger.info(self.environment, "Obelisk fully charged, disable Quantum Quarts.")
 
 
