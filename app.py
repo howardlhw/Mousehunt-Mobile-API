@@ -13,8 +13,8 @@ load_dotenv('.env')
 def execute_script():
     """ This is the main execution script """
     load_dotenv()
-    stop_hour = 10
-    start_hour = 10
+    stop_hour = 4
+    start_hour = 8
 
     while True:
         try:

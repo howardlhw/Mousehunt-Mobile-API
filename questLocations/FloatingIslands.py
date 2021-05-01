@@ -256,9 +256,9 @@ class FloatingIslands(QuestAbstractions):
 
     def armPirateSetup(self):
         status = False
-        if self.getTrapSetup('weapon_id') != 1515:
-            self.changeTrap(1515)
-            logger.info(self.environment, 'Arming School of Shark')  
+        if self.getTrapSetup('weapon_id') != 3088:
+            self.changeTrap(3088)
+            logger.info(self.environment, 'Arming Sleeping Stone Trap')  
             status = True
 
         if self.getTrapSetup('bait_id') != 3090:
@@ -299,7 +299,7 @@ class FloatingIslands(QuestAbstractions):
                     if power == None:
                         logger.info(self.environment, f'No suitable island found, triggering cyclone.')
                         self.useCyclone()  # Troubleshoot first
-                        time.sleep(15)
+                        time.sleep(1)
 
                 # If launching to pirate, equip pirate setup
                 if self.getCorsairCheeseCount() >= pirate_threshold:
