@@ -32,6 +32,9 @@ class BristleWoodsRift(QuestAbstractions):
     def getObeliskCharge(self):
         return self.userdata['user']['location_stats']['obelisk_percent']
 
+    def getCurrentChamber(self):
+        return self.userdata['user']['location_stats']['chamber_type']
+
     def toggleQuantumQuarts(self):
         res = self.action({'action': 'toggle_loot_boost'})
         return res
@@ -107,7 +110,7 @@ class BristleWoodsRift(QuestAbstractions):
         portals = list(set(portals))
         logger.info(self.environment, portals)
 
-        aa_sand_threshold = 40  # For entering acolyate chamber
+        aa_sand_threshold = 45  # For entering acolyate chamber
         runic_threshold = aa_sand_threshold  # For entering acolyate chamber
         runic_upper_threshold = 400 # For stop entering runic chambers
         timewramp_runicRqd_thresdhold = 40 # Required amount of runic cheese before enteiring timewarp
@@ -123,6 +126,11 @@ class BristleWoodsRift(QuestAbstractions):
         if 'entrance_chamber' in portals:
             logger.info(self.environment, "Starting the loop again....")
             return 'basic_chamber'
+
+        # Revert to normal mode conditions
+        if mode == 'speedy' and self.getItemsCount('runic_string_cheese') < 60:
+            logger.info(self.environment, "Insufficient RSC, converting to normal mode")
+            mode = None
 
         # Go straight to the AA under speedy and can afford to scramble
         if mode == 'speedy':
@@ -166,15 +174,15 @@ class BristleWoodsRift(QuestAbstractions):
             logger.info(self.environment, "Acolyte Condiiton met, entering chamber")
             return 'acolyte_chamber'
 
-        # Condition - Money is money
-        if 'lucky_chamber' in portals:
-            # logger.info(self.environment, "Entering Lucky Chamber.")
-            return 'lucky_chamber'
+        # # Condition - Money is money
+        # if 'lucky_chamber' in portals:
+        #     # logger.info(self.environment, "Entering Lucky Chamber.")
+        #     return 'lucky_chamber'
 
-        # Condition - Money is money
-        if 'treasury_chamber' in portals:
-            # logger.info(self.environment, "Entering Treasury Chamber.")
-            return 'treasury_chamber'
+        # # Condition - Money is money
+        # if 'treasury_chamber' in portals:
+        #     # logger.info(self.environment, "Entering Treasury Chamber.")
+        #     return 'treasury_chamber'
 
         # Condition - Don't get into timewarp if not enough runic cheese
         if 'timewarp_chamber' in portals and \
@@ -194,15 +202,15 @@ class BristleWoodsRift(QuestAbstractions):
             logger.info(self.environment, "Gathering Runic cheese.")
             return 'magic_chamber'
 
-        if 'potion_chamber' in portals:
-            logger.info(self.environment, "Gathering Ancient String cheese.")
-            return 'potion_chamber'
+        # if 'potion_chamber' in portals:
+        #     logger.info(self.environment, "Gathering Ancient String cheese.")
+        #     return 'potion_chamber'
 
         if self.getItemsCount('rift_scramble_portals_stat_item') < 2:
-            logger.info(self.environment, "Critically low portal scramblers.")
+        #     logger.info(self.environment, "Critically low portal scramblers.")
             initialPortals = list(set(self.getCurrentPortals()))
-            if 'potion_charmber' in initialPortals:
-                return 'potion_chamber'
+        #     if 'potion_charmber' in initialPortals:
+        #         return 'potion_chamber'
 
             if 'magic_chamber' in initialPortals:
                 return 'magic_chamber'
@@ -230,9 +238,15 @@ class BristleWoodsRift(QuestAbstractions):
         # Toggle for the case at acolyte chamber
         if self.getObeliskCharge() == 100 and self.isItemActive('rift_quantum_quartz_stat_item'):
             self.toggleQuantumQuarts()
-            self.changeTrap(2524) # User festive ultimate lucky power charm
+            # self.changeTrap(2524) # Use festive ultimate lucky power charm
+            self.changeTrap(1288) # Use festive ultimate luck charm
             logger.info(self.environment, "Obelisk fully charged, disable Quantum Quarts.")
 
+        # Change trap setup after having suficient sand
+        if self.getCurrentChamber() == 'timewarp_chamber' and self.getItemsCount('rift_hourglass_sand_stat_item') > 44:
+            if self.getTrapSetup('bait_id') != 1424:
+                self.changeTrap(1424)
+                logger.info(self.environment, 'Armed brie string cheese due to sufficient sand.')
 
         # Refil brie string cheese if running low
         if self.getItemsCount('brie_string_cheese') < 200:

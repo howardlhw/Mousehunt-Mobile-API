@@ -58,9 +58,6 @@ class FloatingIslands(QuestAbstractions):
             not self.has_defeated_enemy() and \
                 self.isOnHighAltitudeIsland()
 
-    def getTrapSetup(self, type):
-        return self.userdata['user']['trap'][type]
-
     def enableBottledWind(self):
         if self.getBottledWindStatus() == False:
             logger.info(self.environment, 'Enabled bottled wind.')
@@ -154,12 +151,16 @@ class FloatingIslands(QuestAbstractions):
         logger.info(self.environment, f'{mode} mode grid search')
 
         for power in weaponMap:
+            # Power skipping, if applicable
             # if power == "drcnc":
             #     eprint("Floating Islands", "Skipping Draconic")
             #     continue
 
             # Pirate Mode
             if mode == 'pirate':
+                # Prioritize pirate hunting
+                if weaponMap[power].count('sky_pirates') != 2:
+                    continue
                 if weaponMap[power][0] != 'sky_pirates':
                     continue
 
@@ -172,7 +173,7 @@ class FloatingIslands(QuestAbstractions):
             
             # Pirate mode on high altitude island, prioritize pirate on high altitude
             elif mode == 'high_pirate':
-                if not ('loot_cache' in weaponMap[power] and 'sky_pirates' in weaponMap[power]):
+                if not ('loot_cache' in weaponMap[power] and weaponMap[power].count('sky_pirates') == 2):
                     continue
 
             # Loot mode on high altitude island, prioritize pirate on loot
@@ -256,9 +257,9 @@ class FloatingIslands(QuestAbstractions):
 
     def armPirateSetup(self):
         status = False
-        if self.getTrapSetup('weapon_id') != 3088:
-            self.changeTrap(3088)
-            logger.info(self.environment, 'Arming Sleeping Stone Trap')  
+        if self.getTrapSetup('weapon_id') != 3152:
+            self.changeTrap(3152)
+            logger.info(self.environment, 'Arming S.S.S.S. Trap')  
             status = True
 
         if self.getTrapSetup('bait_id') != 3090:
@@ -266,9 +267,14 @@ class FloatingIslands(QuestAbstractions):
             logger.info(self.environment, 'Arming Pirate Cheese')
             status = True
 
-        if self.getTrapSetup('trinket_id') != 2121:
-            self.changeTrap(2121)
-            logger.info(self.environment, 'Arming Rift Ultimate Lucky Power charm')
+        # if self.getTrapSetup('trinket_id') != 2121:
+        #     self.changeTrap(2121)
+        #     logger.info(self.environment, 'Arming Rift Ultimate Lucky Power charm')
+        #     status = True
+
+        if self.getTrapSetup('trinket_id') != 1651:
+            self.changeTrap(1651)
+            logger.info(self.environment, 'Arming Rift ultimate power charm')
             status = True
 
         if status:
@@ -278,7 +284,7 @@ class FloatingIslands(QuestAbstractions):
         # Commence loop to scramble door until the preferred door is available
         while (True):
             # Determining the threshold to start hunting pirates.
-            pirate_threshold = 20
+            pirate_threshold = 123
             # Case 1 - at launch pad ready to go
             if self.isAtLaunchPad():
                 while True:
@@ -289,6 +295,7 @@ class FloatingIslands(QuestAbstractions):
                     if self.isAtHAI():
                         # return # don't select island first
                         # power = self.determineIslandTarget() # Normal high speed hunting
+                        # power = self.determineIslandTarget('high_pirate') # Double pirate icon mode
                         power = self.determineIslandTarget('high_loot')
                     elif self.getCorsairCheeseCount() >= pirate_threshold:
                         power = self.determineIslandTarget('pirate')
@@ -299,14 +306,14 @@ class FloatingIslands(QuestAbstractions):
                     if power == None:
                         logger.info(self.environment, f'No suitable island found, triggering cyclone.')
                         self.useCyclone()  # Troubleshoot first
-                        time.sleep(1)
+                        time.sleep(5)
+
+                self.launch(power)
 
                 # If launching to pirate, equip pirate setup
                 if self.getCorsairCheeseCount() >= pirate_threshold:
-                    self.launch(power)
                     self.armPirateSetup()
                 else:
-                    self.launch(power)
                     self.armSavedSetup()
                 return
 
@@ -327,6 +334,9 @@ class FloatingIslands(QuestAbstractions):
                     if not self.isArmingSavedSetup():
                         logger.info(self.environment, f'On high altitude island, arm saved setup.')
                         self.armSavedSetup()
+
+                # Actions here are for low altittude islands, hunt pirate if has enough cheese
+                # Else hunt normally.
                 elif self.getCorsairCheeseCount() >= pirate_threshold: 
                     self.armPirateSetup()
                 elif self.getCorsairCheeseCount() < pirate_threshold:
@@ -339,8 +349,6 @@ class FloatingIslands(QuestAbstractions):
                     self.disableBottledWind()
                 else:
                     self.enableBottledWind()
-
-                # self.enableBottledWind()   
 
             return
 

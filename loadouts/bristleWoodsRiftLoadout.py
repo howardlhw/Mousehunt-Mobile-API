@@ -1,7 +1,7 @@
 loadouts = {
     'silence_chamber': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     },
     'guard_chamber': {
@@ -11,17 +11,17 @@ loadouts = {
     },
     'icy_chamber': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     },
     'lucky_chamber': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_anti_skele_trinket' # rift_trinkey
     },
     'treasure_chamber': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_anti_skele_trinket' # rift_trinkey
     },
     'acolyte_chamber': {
@@ -41,17 +41,17 @@ loadouts = {
     },
     'potion_chamber': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_vacuum_trinket' # rift_trinkey
     },
     'gearWorks': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     },
     'basic_chamber': {
         'quantumQuarts': True,
-        'bait': 'brie_string_cheese',
+        'bait': 'magical_string_cheese',
         'trinket': 'rift_vacuum_trinket'
     }
 }

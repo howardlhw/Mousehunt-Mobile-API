@@ -7,13 +7,15 @@ from datetime import datetime
 from dotenv import load_dotenv
 from questLocations.Main import MouseHunt
 from util.util import logger
+import coloredlogs
 
 load_dotenv('.env')
+coloredlogs.install(fmt='%(asctime)s %(message)s')
 
 def execute_script():
     """ This is the main execution script """
     load_dotenv()
-    stop_hour = 4
+    stop_hour = 5
     start_hour = 8
 
     while True:

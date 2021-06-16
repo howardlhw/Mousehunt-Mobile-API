@@ -30,6 +30,9 @@ class QuestAbstractions(ABC):
         res = setTrap(self.login_token, ids)
         return res
 
+    def getTrapSetup(self, type):
+        return self.userdata['user']['trap'][type]
+
     def debug(self):
         print(self.userdata['user']['location_stats'])
 
